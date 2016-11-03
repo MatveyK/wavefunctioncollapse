@@ -140,6 +140,25 @@ Model.prototype.iterate = function (iterations, rng) {
     for (i = 0; i < iterations || iterations === 0; i++) {
         result = this.singleIteration(rng);
 
+        console.log("ITERATION: ", this.iteration, "\n");
+        for(var x = 0; x < this.FMX; x++) {
+            for(var y = 0; y < this.FMY; y++) {
+                var tempCounter = 0;
+                var tempT = 0;
+                for(var t = 0; t < this.T; t++) {
+
+                    if (this.wave[x][y][t] === true) {
+                        tempCounter++;
+                        tempT = t;
+                    }
+                }
+
+                if(tempCounter == 1) {
+                    console.log("X: ", x, "Y: ", y, "T: ", tempT);
+                }
+            }
+        }
+
         if (result !== null) {
             return !!result;
         }
@@ -175,6 +194,26 @@ Model.prototype.generate = function (rng) {
  */
 Model.prototype.isGenerationComplete = function () {
     return this.generationComplete;
+};
+
+Model.prototype.initWave = function (customWave) {
+
+    this.wave = customWave;
+
+    this.iteration += 1;
+
+    for(var x = 0; x < this.FMX; x++) {
+        for(var y = 0; y < this.FMY; y++) {
+            if(this.wave[x][y].includes(false)) {
+                this.changes[x][y] = this.iteration;
+            }
+        }
+    }
+
+    this.initiliazedField = true;
+    this.generationComplete = false;
+
+    while (this.propagate()) {}
 };
 
 /**

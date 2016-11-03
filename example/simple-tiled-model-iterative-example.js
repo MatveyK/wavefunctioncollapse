@@ -23,6 +23,60 @@ var addBitmapDataToStructure = function (structure, callback) {
     });
 };
 
+var createCustomWave = function () {
+
+    var wave = new Array();
+
+    for(var x = 0; x < 20; x++) {
+        wave[x] = new Array();
+
+        for(var y = 0; y < 20; y++) {
+            wave[x][y] = new Array();
+        }
+    }
+
+    for(var x = 0; x < 20; x++) {
+        for(var y = 0; y < 20; y++) {
+            for(var t = 0; t < 29; t++) {
+
+                    wave[x][y][t] = false;
+
+            }
+        }
+    }
+
+    for(var x = 0; x < 20; x++) {
+        for(var y = 0; y < 20; y++) {
+            if(x == 5 && y == 8) {
+                for(var t = 0; t < 29; t++) {
+                    if(t == 7) wave[x][y][t] = true;
+                    else wave[x][y][t] = false;
+                }
+            } else if((x == 5) && y == 9) {
+                for(var t = 0; t < 29; t++) {
+                    if(t == 0) wave[x][y][t] = true;
+                    else wave[x][y][t] = false;
+                }
+            } else if(x == 5 && y == 10) {
+                for(var t = 0; t < 29; t++) {
+                    if(t == 3) wave[x][y][t] = true;
+                    else wave[x][y][t] = false;
+                }
+            } else if(x == 5 && y == 11) {
+                for(var t = 0; t < 29; t++) {
+                    if(t == 0) wave[x][y][t] = true;
+                    else wave[x][y][t] = false;
+                }
+            } else {
+                for(var t = 0; t < 29; t++) {
+                    wave[x][y][t] = true;
+                }
+            }
+        }
+    }
+    return wave;
+};
+
 addBitmapDataToStructure(definition, function (err, definition) {
     if (err) {
         throw err;
@@ -36,7 +90,9 @@ addBitmapDataToStructure(definition, function (err, definition) {
     try {
         var model = new SimpleTiledModel(definition, null, destWidth, destHeight, false);
 
-        var rng = seed('test');
+        model.initWave(createCustomWave());
+
+        var rng = seed('test2');
 
         var image = new Jimp(destWidth * definition.tilesize, destHeight * definition.tilesize, function (err, image) {
             var rgbaData = new Uint8Array(image.bitmap.data.buffer);
