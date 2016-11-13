@@ -140,7 +140,7 @@ Model.prototype.iterate = function (iterations, rng) {
     for (i = 0; i < iterations || iterations === 0; i++) {
         result = this.singleIteration(rng);
 
-        console.log("ITERATION: ", this.iteration, "\n");
+        //console.log("ITERATION: ", this.iteration, "\n");
         for(var x = 0; x < this.FMX; x++) {
             for(var y = 0; y < this.FMY; y++) {
                 var tempCounter = 0;
@@ -154,7 +154,7 @@ Model.prototype.iterate = function (iterations, rng) {
                 }
 
                 if(tempCounter == 1) {
-                    console.log("X: ", x, "Y: ", y, "T: ", tempT);
+                   // console.log("X: ", x, "Y: ", y, "T: ", tempT);
                 }
             }
         }
