@@ -196,6 +196,11 @@ Model.prototype.isGenerationComplete = function () {
     return this.generationComplete;
 };
 
+/**
+ * Initialize the model with your own custom wave.
+ * This allows you to set the initial constraints of the model.
+ * @param customWave The initial wave defined by user.
+ */
 Model.prototype.initWave = function (customWave) {
 
     this.wave = customWave;
@@ -214,6 +219,25 @@ Model.prototype.initWave = function (customWave) {
     this.generationComplete = false;
 
     while (this.propagate()) {}
+};
+
+/**
+ * Get the wave in its fully collapsed state in the form of
+ * a matrix of collapsed tiles.
+ */
+Model.prototype.getFullyCollapsedWave = function () {
+    const wave = JSON.parse(JSON.stringify(this.wave));
+
+    for(let x = 0; x < this.FMX; x++) {
+        for(let y = 0; y < this.FMY; y++) {
+            for(let t = 0; t < this.T; t++) {
+                if(wave[x][y][t]) {
+                    wave[x][y] = t;
+                }
+            }
+        }
+    }
+    return wave;
 };
 
 /**
